@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("com.google.dagger.hilt.android")
+    id("kotlin-android")
     id("kotlin-kapt")
 }
 
@@ -67,6 +68,11 @@ dependencies {
     // Hilt
     implementation ("com.google.dagger:hilt-android:$hilt")
     kapt ("com.google.dagger:hilt-android-compiler:$hilt")
+
+    // Room components
+    implementation("androidx.room:room-ktx:2.5.2")
+    kapt("androidx.room:room-compiler:2.5.2")
+    androidTestImplementation("androidx.room:room-testing:2.5.2")
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
