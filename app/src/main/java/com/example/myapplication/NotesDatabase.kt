@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.myapplication.data.NoteDao
 import com.example.myapplication.data.NoteEntity
+import kotlinx.coroutines.CoroutineScope
 
 @Database(entities = [NoteEntity::class], version = 1, exportSchema = false)
 public abstract class NotesDatabase : RoomDatabase() {
@@ -14,15 +15,18 @@ public abstract class NotesDatabase : RoomDatabase() {
 
     companion object {
         @Volatile
-        private var INSTANCE: NotesDatabase? = null
+        var INSTANCE: NotesDatabase? = null
 
-        fun getDatabase(context: Context): NotesDatabase {
+        fun getDatabase(
+            context: Context,
+            scope: CoroutineScope
+        ): NotesDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     NotesDatabase::class.java,
                     "notes_db"
-                ).build()
+                ).addCallback(NotesDatabaseCallback(scope)).build()
                 INSTANCE = instance
                 // return instance
                 instance

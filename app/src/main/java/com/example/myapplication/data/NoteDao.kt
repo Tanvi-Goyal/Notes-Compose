@@ -12,7 +12,7 @@ interface NoteDao {
     fun getNotes(): Flow<List<Note>>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(note: Note)
+    suspend fun insert(note: NoteEntity)
 
     @Query("DELETE from note WHERE id = :id")
     suspend fun delete(id: Long)
